@@ -18,12 +18,12 @@ namespace Project_Staff
 			Salary = position.Salary;
 		}
 
-		public string Title;
-		public string Devision;
-		public decimal Salary;
-		
+		public string Title { get; private set; }
+		public string Devision { get; private set; }
+		public decimal Salary { get; private set; }
 
-		public override string ToString()
+
+	public override string ToString()
 		{
 			StringBuilder answer =  new StringBuilder();
 			answer.Append("Должность: " + Title + Environment.NewLine);

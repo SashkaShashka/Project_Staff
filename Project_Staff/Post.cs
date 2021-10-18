@@ -13,8 +13,8 @@ namespace Project_Staff
 			Bet = bet;
 		}
 
-		public Position Position;
-		public double Bet;
+		public Position Position { get; private set; }
+		public double Bet { get; private set; }
 
 
 		public override string ToString()

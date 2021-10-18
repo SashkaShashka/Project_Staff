@@ -17,12 +17,12 @@ namespace Project_Staff
 			BirthDay = birthDay;
 			Posts = new List<Post>();
 		}
-		public uint ServiceNumber;
-		public string SurName;
-		public string FirstName;
-		public string MiddleName;
-		public DateTime BirthDay;
-		public List<Post> Posts;
+		public uint ServiceNumber { get; private set; }
+		public string SurName { get; private set; }
+		public string FirstName { get; private set; }
+		public string MiddleName { get; private set; }
+		public DateTime BirthDay { get; private set; }
+		public List<Post> Posts { get; private set; }
 
 		public void AddPost(Post post)
 		{
