@@ -19,9 +19,10 @@ namespace Project_Staff
 
 		public override string ToString()
 		{
-			string answer = Position.ToString();
-			answer += "Ставка: " + Bet + Environment.NewLine;
-			return answer;
+			StringBuilder answer = new StringBuilder();
+			answer.Append(Position.ToString());
+			answer.Append("Ставка: " + Bet + Environment.NewLine);
+			return answer.ToString();
 		}
 	}
 }

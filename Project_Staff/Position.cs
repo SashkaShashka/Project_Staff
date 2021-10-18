@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Project_Staff
 {
@@ -24,10 +25,11 @@ namespace Project_Staff
 
 		public override string ToString()
 		{
-			string answer = "Должность: " + Title + Environment.NewLine;
-			answer += "Подразделение: " + Devision + Environment.NewLine;
-			answer += "Оклад: " + Salary + Environment.NewLine;
-			return answer;
+			StringBuilder answer =  new StringBuilder();
+			answer.Append("Должность: " + Title + Environment.NewLine);
+			answer.Append("Подразделение: " + Devision + Environment.NewLine);
+			answer.Append("Оклад: " + Salary + Environment.NewLine);
+			return answer.ToString();
 		}
 
 	}

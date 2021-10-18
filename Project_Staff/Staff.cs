@@ -42,12 +42,18 @@ namespace Project_Staff
 		}
 		public override string ToString()
 		{
-			string answer = "Табельный номер: " + ServiceNumber + Environment.NewLine;
-			answer += "Фамилия: " + SurName + Environment.NewLine;
-			answer += "Имя: " + FirstName + Environment.NewLine;
-			answer += "Отчество: " + MiddleName + Environment.NewLine;
-			answer += "Дата родения: " + BirthDay.Date.ToString("dd.MM.yyyy");
-			return answer;
+			StringBuilder answer = new StringBuilder();
+			answer.Append("Табельный номер: " + ServiceNumber + Environment.NewLine);
+			answer.Append("Фамилия: " + SurName + Environment.NewLine);
+			answer.Append("Имя: " + FirstName + Environment.NewLine);
+			answer.Append("Отчество: " + MiddleName + Environment.NewLine);
+			answer.Append("Дата родения: " + BirthDay.Date.ToString("dd.MM.yyyy") + Environment.NewLine);
+			answer.Append("Занимаемые должности: " + Environment.NewLine);
+			foreach (Post post in Posts)
+            {
+				answer.Append(post.ToString());
+            }
+			return answer.ToString();
 		}
 	}
 }
