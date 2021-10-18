@@ -45,8 +45,6 @@ namespace Project_Staff
             Console.WriteLine();
             Console.WriteLine("Сотрудник:");
             Console.WriteLine(staff.ToString());
-            Console.Write("Оклад сотрудника: ");
-            Console.WriteLine(String.Format("{0:C2}", staff.CalculateSalary));
         }
         private static decimal ReadSalary()
         {
