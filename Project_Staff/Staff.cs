@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 
 namespace Project_Staff
@@ -16,67 +17,26 @@ namespace Project_Staff
 			MiddleName = middleName;
 			BirthDay = birthDay;
 			Posts = new List<Post>();
-			ResultSalary = 0;
 		}
-		private uint _serviceNumber;
-		private string _surName;
-		private string _firstName;
-		private string _middleName;
-		private DateTime _birthDay;
-		private List<Post> _posts;
-		private decimal _resultSalary;
-		public uint ServiceNumber
-		{
-			get { return _serviceNumber; }
-			private set { _serviceNumber = value; }
-		}
-		public string SurName
-		{
-			get { return _surName; }
-			private set { _surName = value; }
-		}
-		public string FirstName
-		{
-			get { return _firstName; }
-			private set { _firstName = value; }
-		}
-		public string MiddleName
-		{
-			get { return _middleName; }
-			private set {_middleName= value; }
-		}
-		public DateTime BirthDay
-		{
-			get { return _birthDay; }
-			private set { _birthDay = value; }
-		}
-		public List<Post> Posts
-		{
-			get { return _posts; }
-			private set { _posts = value; }
-		}
-		public decimal ResultSalary
-		{
-			get { return _resultSalary; }
-			private set { _resultSalary = value; }
-		}
+		public uint ServiceNumber { get; private set; }
+		public string SurName { get; private set; }
+		public string FirstName { get; private set; }
+		public string MiddleName { get; private set; }
+		public DateTime BirthDay { get; private set; }
+		public List<Post> Posts { get; private set; }
 
-		private decimal CalculateSalary()
+		public decimal CalculateSalary
         {
-			decimal resultSalary = 0;
-			foreach (Post post in Posts)
-			{
-				resultSalary += post.Position.Salary * (decimal)post.Bet;
+            get
+            {
+				return Posts.Select(x => x.Position.Salary * (decimal)x.Bet).Sum()*(decimal)(1-NDFL);
 			}
-			return resultSalary * (1 - (decimal)NDFL);
-			
         }
 
 
 		public void AddPost(Post post)
 		{
 			Posts.Add(post);
-			ResultSalary = CalculateSalary();
 		}
 		public override string ToString()
 		{
@@ -91,7 +51,7 @@ namespace Project_Staff
             {
 				answer.Append(post.ToString());
             }
-			answer.Append("Оклад: " + String.Format("{0:C2}", ResultSalary) + Environment.NewLine);
+			answer.Append("Оклад: " + String.Format("{0:C2}", CalculateSalary) + Environment.NewLine);
 			return answer.ToString();
 		}
 	}

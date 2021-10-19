@@ -17,24 +17,9 @@ namespace Project_Staff
 			Devision = position.Devision;
 			Salary = position.Salary;
 		}
-		private string _title;
-		private string _devision;
-		private decimal _salary;
-		public string Title 
-		{ 
-			get { return _title; } 
-			private set { _title = value; } 
-		}
-		public string Devision 
-		{ 
-			get { return _devision; } 
-			private set { _devision = value; } 
-		}
-		public decimal Salary 
-		{ 
-			get { return _salary; }
-			private set { _salary = value; } 
-		}
+		public string Title { get; private set; }
+		public string Devision { get; private set; }
+		public decimal Salary { get; private set; }
 
 
 	public override string ToString()

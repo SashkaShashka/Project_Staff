@@ -12,18 +12,8 @@ namespace Project_Staff
 			Position = new Position(position);
 			Bet = bet;
 		}
-		private Position _position;
-		private double _bet;
-		public Position Position
-		{
-			get { return _position; }
-			private set { _position = value; }
-		}
-		public double Bet
-		{
-			get { return _bet; }
-			private set { _bet = value; }
-		}
+		public Position Position { get; private set; }
+		public double Bet { get; private set; }
 
 
 
