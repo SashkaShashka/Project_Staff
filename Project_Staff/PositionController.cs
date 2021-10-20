@@ -14,6 +14,14 @@ namespace Project_Staff
         {
             positions = new List<Position>();
         }
+        public PositionController(IEnumerable<Position> pos)
+        {
+            positions = new List<Position>();
+            foreach (Position position in pos)
+            {
+                positions.Add(position);
+            }
+        }
         public int Lenght { get => positions.Count; }
         public void AddPosition()
         {

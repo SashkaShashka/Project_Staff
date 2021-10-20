@@ -64,14 +64,13 @@ namespace Project_Staff
         static void Main(string[] args)
         {
 
-            PositionController positionController = new PositionController();
+            PositionController positionController = new PositionController(MocksFabric.MockProducts);
             StaffController staffController = new StaffController();
             Console.WriteLine("Введите должности: ");
             Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы начать.");
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
-                Console.WriteLine();
                 positionController.AddPosition();
                 Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы продолжить.");
             }
@@ -82,7 +81,6 @@ namespace Project_Staff
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
-                Console.WriteLine();
                 SelectPosition(positionController,staffController.AddStaff());
                 Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы продолжить.");
             }
