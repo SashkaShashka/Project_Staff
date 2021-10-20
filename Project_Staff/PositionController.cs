@@ -10,8 +10,6 @@ namespace Project_Staff
     public class PositionController : IEnumerable<Position>
     {
         public List<Position> positions;
-
-
         public PositionController()
         {
             positions = new List<Position>();
@@ -61,7 +59,7 @@ namespace Project_Staff
             else
                 return false;
         }
-        public Position FindByIndex(int index)
+        public Position FindByIndex(int index) //сомнительный метод (пока что для тестов)
         {
             if (index < 0 || index > positions.Count - 1)
                 return null;

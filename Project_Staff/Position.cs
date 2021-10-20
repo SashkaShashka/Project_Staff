@@ -27,6 +27,10 @@ namespace Project_Staff
 		public string Devision { get; private set; }
 		public decimal Salary { get; private set; }
 
+		public Position Copy(Position position)
+        {
+			return new Position(position.Title, position.Devision, position.Salary);
+        }
 
 		public override string ToString()
 		{
@@ -36,7 +40,7 @@ namespace Project_Staff
 			answer.Append("\tОклад: " + Salary + Environment.NewLine);
 			return answer.ToString();
 		}
-		public string ToStringPos()
+		public string ToStringTitle() // метод возможно не нужен
 		{
 			StringBuilder answer = new StringBuilder();
 			answer.Append("    Должность: " + Title + Environment.NewLine);

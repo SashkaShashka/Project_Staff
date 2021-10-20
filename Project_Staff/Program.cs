@@ -36,7 +36,7 @@ namespace Project_Staff
                         Console.ResetColor();
                     }
                     else
-                        Console.Write(position.ToStringPos());
+                        Console.Write(position.ToStringTitle());
                     i++;
                 }
                 ch = Console.ReadKey(true).Key;

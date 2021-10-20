@@ -104,6 +104,10 @@ namespace Project_Staff
         {
 			return this.ServiceNumber == staff.ServiceNumber;
         }
+		public Staff Copy(Staff staff)
+		{
+			return new Staff(staff.SurName,staff.FirstName,staff.MiddleName,staff.BirthDay,staff.Posts);
+		}
 		private static string ReadString(string str)
 		{
 			string value;
