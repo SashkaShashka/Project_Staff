@@ -5,12 +5,6 @@ namespace Project_Staff
 {
 	public class Position
 	{
-		public Position()
-        {
-			Title = ReadString("должность");
-			Devision = ReadString("подразделение"); ;
-			Salary = ReadSalary();
-		}
 		public Position(string title, string devision, decimal salary)
 		{
 			if (string.IsNullOrEmpty(title))
@@ -29,7 +23,7 @@ namespace Project_Staff
 			Devision = devision;
 			Salary = salary;
 		}
-		public Position(Position position)
+		public Position(Position position) //метод 
 		{
 			Title = position.Title;
 			Devision = position.Devision;
@@ -42,6 +36,12 @@ namespace Project_Staff
 		public Position Copy(Position position)
         {
 			return new Position(position.Title, position.Devision, position.Salary);
+        }
+		public void Edit(Position position)
+        {
+			Title = position.Title;
+			Devision = position.Devision;
+			Salary = position.Salary;
         }
 
 		public override string ToString()
@@ -61,28 +61,6 @@ namespace Project_Staff
 		public bool Equals(Position position)
 		{
 			return (this.Title == position.Title && this.Devision == position.Devision && this.Salary == position.Salary);
-		}
-		private static decimal ReadSalary()
-		{
-			decimal val;
-			Console.WriteLine("Оклад должен быть не отрицательный в виде числа");
-			Console.Write("Введите оклад: ");
-			while (!decimal.TryParse(Console.ReadLine(), out val))
-			{
-				Console.WriteLine("Оклад должен быть не отрицательный в виде числа");
-				Console.Write("Введите оклад: ");
-			}
-			return val;
-		}
-		private static string ReadString(string str)
-		{
-			string value;
-			do
-			{
-				Console.Write("Введите {0}: ", str);
-				value = Console.ReadLine();
-			} while (value.Length == 0);
-			return value;
 		}
 	}
 	

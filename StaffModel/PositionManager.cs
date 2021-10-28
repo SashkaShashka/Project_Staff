@@ -7,27 +7,27 @@ namespace Project_Staff
 
 {
 
-    public class PositionController : IEnumerable<Position>
+    public class PositionManager : IEnumerable<Position>
     {
-        public List<Position> positions;
-        public PositionController()
+        private List<Position> positions;
+        private StaffManager staffs;
+        public PositionManager(StaffManager staffs)
         {
             positions = new List<Position>();
+            
         }
-        public PositionController(IEnumerable<Position> pos)
+        public PositionManager(IEnumerable<Position> pos, StaffManager staffs)
         {
             positions = new List<Position>();
+            this.staffs = staffs;
             foreach (Position position in pos)
             {
                 positions.Add(position);
             }
         }
+        public IEnumerable<Position> Positions { get => positions; }
         public int Lenght { get => positions.Count; }
-        public void AddPosition()
-        {
-            Position position = new Position();
-            AddPosition(position);
-        }
+
         public void AddPosition(Position position)
         {
             positions.Add(position);
@@ -40,7 +40,7 @@ namespace Project_Staff
         public bool RemovePosition(Position position)
         {
             Position pos = Find(position);
-            if (pos != null)
+            if (pos != null && staffs.CanRemoved(position)==true)
             {
                 positions.Remove(pos);
                 return true;
@@ -50,18 +50,15 @@ namespace Project_Staff
         }
         public Position Find(Position position)
         {
-            foreach (Position pos in positions)
-            {
-                if (pos.Equals(position))
-                    return pos;
-            }
-            return null;
+            return positions.Find(x => x.Equals(position));
         }
         public bool Edit(Position oldValue, Position newValue)
         {
-            if (RemovePosition(oldValue) == true)
+            int pos = positions.FindIndex(x => x.Equals(oldValue));
+            if (pos != -1)
             {
-                AddPosition(newValue);
+                positions[pos].Edit(newValue);
+
                 return true;
             }
             else
@@ -73,14 +70,8 @@ namespace Project_Staff
                 return null;
             else
             {
-                uint i = 0;
-                foreach (Position position in positions)
-                {
-                    if (i++ == index)
-                        return position;
-                }
+                return positions[index];
             }
-            return null;
         }
         public bool Contains(Position position)
         {
@@ -88,6 +79,7 @@ namespace Project_Staff
                 return true;
             else return false;
         }
+
 
         public override string ToString()
         {

@@ -6,42 +6,21 @@ using System.Collections;
 
 namespace Project_Staff
 {
-    public class StaffController : IEnumerable<Staff>
+    public class StaffManager : IEnumerable<Staff>
     {
         private List<Staff> staffs;
-        public StaffController()
+        public StaffManager()
         {
             staffs = new List<Staff>();
         }
-        public int Leght { get => staffs.Count; }
-        public Staff AddStaff()
-        {
-            Staff staff = new Staff();
-            staffs.Add(staff);
-            return staff;
-        }
-        public Staff AddStaff(string surName, string firstName, string middleName, DateTime birthDay)
-        {
-            Staff staff = new Staff(surName, firstName, middleName,birthDay);
-            staffs.Add(staff);
-            return staff;
-        }
+        public IEnumerable<Staff> Staffs { get => staffs; }
+        public int Lenght { get => staffs.Count; }
         public Staff AddStaff(string surName, string firstName, string middleName, DateTime birthDay, Post post)
         {
-            Staff staff = new Staff(surName, firstName, middleName, birthDay, post);
-            staffs.Add(staff);
-            return staff;
+            return AddStaff(surName,firstName, middleName, birthDay, new List<Post>() { post });
         }
-        public Staff AddStaff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts)
+        public Staff AddStaff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts = null)
         {
-            Staff staff = new Staff(surName, firstName, middleName, birthDay, posts);
-            staffs.Add(staff);
-            return staff;
-        }
-        public Staff AddStaff(string surName, string firstName, string middleName, DateTime birthDay, Position position, double bet)
-        {
-            List<Post> posts = new List<Post>();
-            posts.Add(new Post(position, bet));
             Staff staff = new Staff(surName, firstName, middleName, birthDay, posts);
             staffs.Add(staff);
             return staff;
@@ -51,12 +30,6 @@ namespace Project_Staff
             Staff staff = Find(index);
             if (staff != null)
                 staff.AddPost(position, bet);
-        }
-        public void AddPostOfStaff(uint index, Position position)
-        {
-            Staff staff = Find(index);
-            if (staff != null)
-                staff.AddPost(position);
         }
         public bool RemoveStaff(Staff staff)
         {
@@ -80,6 +53,18 @@ namespace Project_Staff
             return false;
 
         }
+        public bool CanRemoved(Position position)
+        {
+            foreach (Staff staff in staffs)
+            {
+                foreach (Post post in staff.Posts)
+                {
+                    if (post.Position.Equals(position))
+                        return false;
+                }
+            }
+            return true;
+        }
         public Staff Find(Staff staff)
         {
             foreach (Staff _staff in staffs)
@@ -98,7 +83,7 @@ namespace Project_Staff
             }
             return null;
         }
-        public bool Edit(uint staff, string surName = null, string firstName = null, string middleName = null, DateTime birthDay = default(DateTime), List<Post> posts = null)
+        public bool Edit(uint staff, string surName = null, string firstName = null, string middleName = null, DateTime birthDay = default(DateTime))
         {
 
             Staff _staff = Find(staff);
@@ -108,7 +93,6 @@ namespace Project_Staff
                 string _firstName;
                 string _middleName;
                 DateTime _birthDay;
-                List<Post> _posts;
 
                 if (surName != null)
                     _surName = surName;
@@ -122,17 +106,12 @@ namespace Project_Staff
                     _middleName = middleName;
                 else
                     _middleName = _staff.MiddleName;
-
-                if (posts != null)
-                    _posts = posts;
-                else
-                    _posts = _staff.Posts;
                 if (birthDay != default(DateTime))
                     _birthDay = birthDay;
                 else
                     _birthDay = _staff.BirthDay;
 
-                _staff.Edit(_surName, _firstName, _middleName, _birthDay, _posts);
+                _staff.Edit(_surName, _firstName, _middleName, _birthDay);
                 return true;
             }
             return false;

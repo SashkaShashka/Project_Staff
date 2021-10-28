@@ -6,18 +6,13 @@ namespace Project_Staff
 {
     public class Post
     {
-		public Post(Position position)
-		{
-			Position = new Position(position);
-			Bet = ReadBet();
-		}
 		public Post(Position position, double bet)
 		{
 			if (bet <= 0 || bet > 1)
 			{
 				throw new ArgumentOutOfRangeException("bet", "Ставка должна быть числом в диапазоне от 0 до 1");
 			}
-			Position = new Position(position);
+			Position = position;
 			Bet = bet;
 		}
 		public Position Position { get; private set; }
@@ -28,18 +23,6 @@ namespace Project_Staff
 			answer.Append(Position.ToString());
 			answer.Append("\tСтавка: " + Bet + Environment.NewLine);
 			return answer.ToString();
-		}
-		private static double ReadBet()
-		{
-			double bet;
-			Console.WriteLine("Ставка должна быть числом от 0 до 1");
-			Console.Write("Введите ставку: ");
-			while (!double.TryParse(Console.ReadLine(), out bet) || bet < 0 || bet > 1)
-			{
-				Console.WriteLine("Ставка должна быть числом от 0 до 1");
-				Console.Write("Введите ставку: ");
-			}
-			return bet;
 		}
 	}
 }

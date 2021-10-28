@@ -11,15 +11,8 @@ namespace Project_Staff
 		static double ndfl = 0.13;
 
 		private static uint Number = 0;
-		public Staff()
-        {
-			SurName = ReadString("Фамилию");
-			FirstName = ReadString("Имя");
-			MiddleName = ReadStringNull("Отчество");
-			BirthDay = ReadBirthDay();
-			Posts = new List<Post>();
-		}
-		public Staff(string surName, string firstName, string middleName, DateTime birthDay)
+
+		public Staff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts = null)
 		{
 			ServiceNumber = Number++;
 			if (string.IsNullOrEmpty(surName))
@@ -38,22 +31,12 @@ namespace Project_Staff
 			FirstName = firstName;
 			MiddleName = middleName;
 			BirthDay = birthDay;
-			Posts = new List<Post>();
+			Posts = posts ?? new List<Post>(); // если список есть, можно его не копировать
 		}
-		public Staff(string surName, string firstName, string middleName, DateTime birthDay, Post post)
-		{
-			new Staff(surName,firstName,middleName,birthDay);
-			AddPost(post);
-		}
-		public Staff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts)
-		{
-			ServiceNumber = Number++;
-			SurName = surName;
-			FirstName = firstName;
-			MiddleName = middleName;
-			BirthDay = birthDay;
-			Posts = new List<Post>(posts);
-		}
+		public Staff(string surName, string firstName, string middleName, DateTime birthDay, Post post) : 
+			this(surName, firstName, middleName, birthDay, new List<Post>() { post })
+
+		{ }
 
 		public double NDFL
 		{
@@ -62,12 +45,12 @@ namespace Project_Staff
 				return ndfl;
 			}
 		}
-		public uint ServiceNumber { get; private set; }
+		public uint ServiceNumber { get; }
 		public string SurName { get; private set; }
 		public string FirstName { get; private set; }
 		public string MiddleName { get; private set; }
 		public DateTime BirthDay { get; private set; }
-		public List<Post> Posts { get; private set; }
+		public List<Post> Posts { get;}
 
 
 		public decimal CalculateWage
@@ -88,23 +71,17 @@ namespace Project_Staff
 		{
 			Posts.Add(post);
 		}
-		public void AddPost(Position position)
-		{
-			Post post = new Post(position);
-			Posts.Add(post);
-		}
 		public void AddPost(Position position, double bet)
 		{
 			Post post = new Post(position, bet);
 			Posts.Add(post);
 		}
-		public void Edit(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts)
+		public void Edit(string surName, string firstName, string middleName, DateTime birthDay)
         {
 			this.SurName = surName;
 			this.FirstName = firstName;
 			this.MiddleName = middleName;
 			this.BirthDay = birthDay;
-			this.Posts = posts;
         }
 		public bool Equal(Staff staff)
         {
@@ -113,36 +90,6 @@ namespace Project_Staff
 		public Staff Copy(Staff staff)
 		{
 			return new Staff(staff.SurName,staff.FirstName,staff.MiddleName,staff.BirthDay,staff.Posts);
-		}
-		private static string ReadString(string str)
-		{
-			string value;
-			do
-			{
-				Console.Write("Введите {0}: ", str);
-				value = Console.ReadLine();
-			} while (value.Length == 0);
-			return value;
-		}
-		private static string ReadStringNull(string str)
-		{
-			string value;
-			Console.Write("Введите {0}: ", str);
-			value = Console.ReadLine();
-			return value;
-		}
-		private static DateTime ReadBirthDay()
-		{
-			string[] formats = { "dd.MM.yyyy" };
-			DateTime parsedDate;
-			do
-			{
-				Console.Write("Введите время и дату события в формате dd.mm.yyyy: ");
-			} while (!DateTime.TryParseExact(Console.ReadLine(), formats, null,
-							   System.Globalization.DateTimeStyles.AllowWhiteSpaces |
-							   System.Globalization.DateTimeStyles.AdjustToUniversal,
-							   out parsedDate));
-			return parsedDate;
 		}
 		public override string ToString()
 		{

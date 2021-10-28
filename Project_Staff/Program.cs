@@ -6,7 +6,7 @@ namespace Project_Staff
 {
     class Program
     {
-        static void SelectPosition(PositionController positions,Staff staff) // временный метод заполнения должности
+        static void SelectPosition(PositionManager positions,Staff staff) // временный метод заполнения должности
         //возможно потом растащу в другие классы
         {
             Console.Clear();
@@ -49,7 +49,7 @@ namespace Project_Staff
                         ++index;
                         break;
                     case ConsoleKey.Enter:
-                        staff.AddPost(positions.FindByIndex(index));
+                        staff.AddPost(new Post(positions.FindByIndex(index),InputValidator.ReadBet()));
                         break;
                 }
                 if (index < 0)
@@ -64,29 +64,31 @@ namespace Project_Staff
         static void Main(string[] args)
         {
 
-            PositionController positionController = new PositionController(MocksFabric.MockProducts);
-            StaffController staffController = new StaffController();
+            StaffManager staffController = new StaffManager();
+            PositionManager positionController = new PositionManager(MocksFabric.MockProducts,staffController);
             Console.WriteLine("Введите должности: ");
             Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы начать.");
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
-                positionController.AddPosition();
+                positionController.AddPosition(InputValidator.ReadString("Должность"), InputValidator.ReadString("Подразделение"),InputValidator.ReadSalary());
                 Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы продолжить.");
             }
 
 
             Console.WriteLine("Введите работников: ");
             Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы начать.");
-
+            staffController.AddStaff("dfs", "fds", "", new DateTime(2000, 10, 10),new Post(positionController.FindByIndex(0),1));
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
-                SelectPosition(positionController, staffController.AddStaff("dfs","fds","",new DateTime(2000,10,10)));
-                SelectPosition(positionController,staffController.AddStaff());
+                SelectPosition(positionController, staffController.AddStaff(InputValidator.ReadString("Фамилию"),"fds","",new DateTime(2000,10,10)));
                 Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы продолжить.");
             }
             Console.WriteLine(staffController.ToString());
-
+            //positionController.RemovePosition(positionController.FindByIndex(0));
+            positionController.RemovePosition(positionController.FindByIndex(1));
+            Console.WriteLine(positionController.ToString());
+            Console.WriteLine(staffController.ToString());
             // снизу закомментирована проверка реализованных методов - работают
 
             /*
