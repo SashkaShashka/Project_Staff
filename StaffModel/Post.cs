@@ -13,10 +13,10 @@ namespace Project_Staff
 		}
 		public Post(Position position, double bet)
 		{
-			if (bet > 1)
-				bet = 1;
-			if (bet < 0)
-				bet = 0;
+			if (bet <= 0 || bet > 1)
+			{
+				throw new ArgumentOutOfRangeException("bet", "Ставка должна быть числом в диапазоне от 0 до 1");
+			}
 			Position = new Position(position);
 			Bet = bet;
 		}

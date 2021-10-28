@@ -13,16 +13,27 @@ namespace Project_Staff
 		private static uint Number = 0;
 		public Staff()
         {
-			ServiceNumber = Number++; ;
 			SurName = ReadString("Фамилию");
 			FirstName = ReadString("Имя");
-			MiddleName = ReadString("Отчество");
+			MiddleName = ReadStringNull("Отчество");
 			BirthDay = ReadBirthDay();
 			Posts = new List<Post>();
 		}
 		public Staff(string surName, string firstName, string middleName, DateTime birthDay)
 		{
 			ServiceNumber = Number++;
+			if (string.IsNullOrEmpty(surName))
+			{
+				throw new ArgumentException("surName", "Фамилия не может быть пустой");
+			}
+			if (string.IsNullOrEmpty(firstName))
+			{
+				throw new ArgumentException("firstName", "Имя не может быть пустым");
+			}
+			if (birthDay > DateTime.Now.AddYears(-18))
+			{
+				throw new ArgumentException("birthDay", "Сотрудник не может быть моложе 18 лет");
+			}
 			SurName = surName;
 			FirstName = firstName;
 			MiddleName = middleName;
@@ -31,12 +42,7 @@ namespace Project_Staff
 		}
 		public Staff(string surName, string firstName, string middleName, DateTime birthDay, Post post)
 		{
-			ServiceNumber = Number++;
-			SurName = surName;
-			FirstName = firstName;
-			MiddleName = middleName;
-			BirthDay = birthDay;
-			Posts = new List<Post>();
+			new Staff(surName,firstName,middleName,birthDay);
 			AddPost(post);
 		}
 		public Staff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts)
@@ -116,6 +122,13 @@ namespace Project_Staff
 				Console.Write("Введите {0}: ", str);
 				value = Console.ReadLine();
 			} while (value.Length == 0);
+			return value;
+		}
+		private static string ReadStringNull(string str)
+		{
+			string value;
+			Console.Write("Введите {0}: ", str);
+			value = Console.ReadLine();
 			return value;
 		}
 		private static DateTime ReadBirthDay()

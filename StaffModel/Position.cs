@@ -13,6 +13,18 @@ namespace Project_Staff
 		}
 		public Position(string title, string devision, decimal salary)
 		{
+			if (string.IsNullOrEmpty(title))
+			{
+				throw new ArgumentException("title", "Должность не может быть пустой");
+			}
+			if (string.IsNullOrEmpty(devision))
+			{
+				throw new ArgumentException("devision", "Подразделение не может быть пустым");
+			}
+			if (salary <= 0)
+			{
+				throw new ArgumentOutOfRangeException("salary", "Оклад должен быть положительным числом");
+			}
 			Title = title;
 			Devision = devision;
 			Salary = salary;

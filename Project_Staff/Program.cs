@@ -81,6 +81,7 @@ namespace Project_Staff
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
+                SelectPosition(positionController, staffController.AddStaff("dfs","fds","",new DateTime(2000,10,10)));
                 SelectPosition(positionController,staffController.AddStaff());
                 Console.WriteLine("Нажмите ESC, чтобы завершить ввод ответов, или любую другую клавишу, чтобы продолжить.");
             }
