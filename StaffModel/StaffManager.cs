@@ -25,7 +25,7 @@ namespace Project_Staff
             staffs.Add(staff);
             return staff;
         }
-        public void AddPostOfStaff(uint index, Position position, double bet)
+        public void AddPostOfStaff(int index, Position position, double bet)
         {
             Staff staff = Find(index);
             if (staff != null)
@@ -42,7 +42,7 @@ namespace Project_Staff
             return false;
 
         }
-        public bool RemoveStaff(uint serviceNumber)
+        public bool RemoveStaff(int serviceNumber)
         {
             Staff _staff = Find(serviceNumber);
             if (_staff != null)
@@ -74,16 +74,14 @@ namespace Project_Staff
             }
             return null;
         }
-        public Staff Find(uint ServiceNumber)
+        public Staff Find(int ServiceNumber)
         {
-            foreach (Staff _staff in staffs)
-            {
-                if (_staff.ServiceNumber == ServiceNumber)
-                    return _staff;
-            }
-            return null;
+            if (ServiceNumber < 0 || ServiceNumber >= Lenght)
+                return null;
+            else
+                return staffs[ServiceNumber];
         }
-        public bool Edit(uint staff, string surName = null, string firstName = null, string middleName = null, DateTime birthDay = default(DateTime))
+        public bool Edit(int staff, string surName = null, string firstName = null, string middleName = null, DateTime birthDay = default)
         {
 
             Staff _staff = Find(staff);

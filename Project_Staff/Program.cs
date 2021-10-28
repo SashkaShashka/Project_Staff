@@ -86,6 +86,7 @@ namespace Project_Staff
             }
             Console.WriteLine(staffController.ToString());
             //positionController.RemovePosition(positionController.FindByIndex(0));
+            staffController.Edit(0, "Сидоров");
             positionController.RemovePosition(positionController.FindByIndex(1));
             Console.WriteLine(positionController.ToString());
             Console.WriteLine(staffController.ToString());
