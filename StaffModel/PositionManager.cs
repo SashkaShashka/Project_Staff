@@ -22,6 +22,14 @@ namespace Project_Staff
                 positions.Add(position);
             }
         }
+        public void LoadPosition(IEnumerable<Position> positions)
+        {
+            this.positions.Clear();
+            foreach (var position in positions)
+            {
+                AddPosition(position);
+            }
+        }
         public void AddStaff(StaffManager staffs)
         {
             this.staffs = staffs;

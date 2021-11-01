@@ -121,6 +121,43 @@ namespace Project_Staff
            
         }
 
+        void SaveToFile()
+        {
+            try
+            {
+                SelectFile.SaveToFile(Positions.Positions.Select(p => PositionFileDto.Map(p)), "Должности");
+            }
+            finally
+            {
+                Console.WriteLine($"Для возврата к каталогу нажмите любую клавишу...");
+                Console.ReadKey();
+            }
+        }
+
+        void LoadFromFile()
+        {
+            try
+            {
+                var loadedData = SelectFile.LoadFromFile<PositionFileDto>("Должности");
+                if (loadedData != null)
+                {
+                    Console.WriteLine("Выполняем чтение данных...");
+                    Positions.LoadPosition(loadedData.Select(p => PositionFileDto.Map(p))
+                    );
+                    Console.WriteLine("Каталог товаров успешно загружен!");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Ошибка! Файл содержит некорректные данные: " + e.Message);
+            }
+            finally
+            {
+                Console.WriteLine($"Для возврата к каталогу нажмите любую клавишу...");
+                Console.ReadKey();
+            }
+        }
+
         public PositionController(List<Position> positions)
         {
             Positions = new PositionManager(positions);
@@ -140,8 +177,8 @@ namespace Project_Staff
                    new MenuAction(ConsoleKey.F4, "Поиск",  SearchPosition),
                    new MenuAction(ConsoleKey.F5, "Фильтр по подразделению", FilterDivision),
                    new MenuAction(ConsoleKey.F6, "Сбросить фильтры", () =>  FilterBy = null),
-                  //  new MenuAction(ConsoleKey.F9, "Сохранить", SaveToFile),
-                 //   new MenuAction(ConsoleKey.F10, "Загрузить", LoadFromFile),
+                   new MenuAction(ConsoleKey.F9, "Сохранить", SaveToFile),
+                   new MenuAction(ConsoleKey.F10, "Загрузить", LoadFromFile),
                    new MenuClose(ConsoleKey.Tab, "Вернуться к сотрудникам"),
                 }
             );
