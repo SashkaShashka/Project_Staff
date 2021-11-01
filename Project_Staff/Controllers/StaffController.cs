@@ -116,6 +116,7 @@ namespace Project_Staff
             {
                 do
                 {
+                    Console.Clear();
                     Console.WriteLine("Нажмите ESC, чтобы завершить, или Enter для выбора.");
                     PrintPositions();
                     ch = Console.ReadKey(true).Key;
@@ -132,7 +133,11 @@ namespace Project_Staff
                 } while (ch != ConsoleKey.Escape && ch != ConsoleKey.Enter);
                 if (ch==ConsoleKey.Enter)
                     SelectedStaff.AddPost(new Post(SelectedPosition, InputValidator.ReadBet()));
-                else break;
+                else
+                {
+                    SelectPosition.SelectedNodeIndex = 0;
+                    break;
+                }
             } 
             
         }
@@ -153,7 +158,6 @@ namespace Project_Staff
             SortMenu.Print();
             SortMenu.Action(Console.ReadKey().Key);
         }
-
         private void SearchStaff()
         {
             Console.Clear();
@@ -175,7 +179,6 @@ namespace Project_Staff
                 Console.ReadKey();
             }
         }
-
         void LoadFromFile()
         {
             try
@@ -225,7 +228,6 @@ namespace Project_Staff
         }
         private void PrintPositions()
         {
-            Console.Clear();
             foreach (Position position in Positions)
             {
                 if (position.Equals(SelectedPosition))
