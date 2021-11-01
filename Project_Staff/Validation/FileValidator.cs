@@ -12,9 +12,9 @@ namespace Project_Staff
             while (true)
             {
                 var input = Console.ReadLine().ToLower();
-                if (input == "да" || input == "д")
+                if (input == "да" || input == "д" || input == "y" || input == "yes")
                     return true;
-                else if (input == "нет" || input == "н")
+                else if (input == "нет" || input == "н" || input =="n" || input == "no")
                     return false;
                 else
                     Console.WriteLine("Пожалуйста, введите \"да\" или \"нет\" (без кавычек)");
@@ -45,7 +45,7 @@ namespace Project_Staff
             {
                 Console.Write("Введите путь к файлу: ", Path.DirectorySeparatorChar);
                 var fileName = Console.ReadLine();
-                if (File.Exists(fileName))
+                if (File.Exists(fileName+".Json")|| File.Exists(fileName + ".Xml"))
                 {
                     Console.Write("Указанный файл существует. Перезаписать? (да/нет)");
                     if (!ReadYesNo())

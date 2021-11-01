@@ -141,7 +141,7 @@ namespace Project_Staff
             int index;
             while (true)
             {
-                index = Remove();
+                index = SelectPostToRemove();
                 if (index != -1)
                     SelectedStaff.RemovePost(SelectedStaff.Posts[index].Position);
                 else break;
@@ -162,7 +162,43 @@ namespace Project_Staff
             SelectStaff.SelectedNodeIndex = 0;
             SearchBy = Console.ReadLine();
         }
+        void SaveToFile()
+        {
+            try
+            {
+                SelectFile.SaveToFile(Staffs.Staffs.Select(b => StaffFileDto.Map(b)),"Сотрудники");
+                Console.WriteLine("Список сотрудников успешно загружен!");
+            }
+            finally
+            {
+                Console.WriteLine($"Для возврата к списку сотрудников нажмите любую клавишу...");
+                Console.ReadKey();
+            }
+        }
 
+        void LoadFromFile()
+        {
+            try
+            {
+                var loadedData = SelectFile.LoadFromFile<StaffFileDto>("Сотрудники");
+                if (loadedData != null)
+                {
+                    Console.WriteLine("Выполняем чтение данных...");
+                    Staffs = new StaffManager(loadedData.Select(p => StaffFileDto.Map(p)).ToList()
+                    );
+                    Console.WriteLine("Сотрудники успешно загружены!");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Ошибка! Файл содержит некорректные данные: " + e.Message);
+            }
+            finally
+            {
+                Console.WriteLine($"Для возврата к списку сотрдуников нажмите любую клавишу...");
+                Console.ReadKey();
+            }
+        }
         public StaffController(PositionManager positions, List<Staff> staffs)
         {
             Positions = positions;
@@ -174,18 +210,13 @@ namespace Project_Staff
                    new MenuAction(ConsoleKey.I, "Посмотреть", StaffInfo),
                    new MenuAction(ConsoleKey.F1, "Новый сотрудник", AddStaff),
                    new MenuAction(ConsoleKey.F2, "Редактировать", EditStaff),
-                   new MenuAction(ConsoleKey.F3, "Новая должность", AddPost),
-                   new MenuAction(ConsoleKey.F4, "Удалить должность", RemovePost),
-                   new MenuAction(ConsoleKey.F5, "Удалить", RemoveStaff),
+                   new MenuAction(ConsoleKey.F3, "Удалить", RemoveStaff),
+                   new MenuAction(ConsoleKey.F4, "Новая должность", AddPost),
+                   new MenuAction(ConsoleKey.F5, "Удалить должность", RemovePost),
                    new MenuAction(ConsoleKey.F6, "Сортировать", ChooseOrder),
                    new MenuAction(ConsoleKey.F7, "Поиск по ФИО", SearchStaff),
-                /* 
-                 
-                new MenuAction(ConsoleKey.F9, "Сохранить",
-                    SaveToFile),
-                new MenuAction(ConsoleKey.F10, "Загрузить",
-                    LoadFromFile),
-                */
+                   new MenuAction(ConsoleKey.F9, "Сохранить", SaveToFile),
+                   new MenuAction(ConsoleKey.F10, "Загрузить", LoadFromFile),
             });
             SortMenu = new Menu(new List<MenuItem>() {
                 new MenuAction(ConsoleKey.DownArrow, "Сортировка по убыванию", () => isOrderByBirthDayDesc = true),
@@ -242,7 +273,7 @@ namespace Project_Staff
                 i++;
             }
         }
-        private int Remove()
+        private int SelectPostToRemove()
         {
             Console.Clear();
             ConsoleKey ch;

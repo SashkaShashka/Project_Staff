@@ -126,10 +126,11 @@ namespace Project_Staff
             try
             {
                 SelectFile.SaveToFile(Positions.Positions.Select(p => PositionFileDto.Map(p)), "Должности");
+                Console.WriteLine("Список должностей успешно сохранен!");
             }
             finally
             {
-                Console.WriteLine($"Для возврата к каталогу нажмите любую клавишу...");
+                Console.WriteLine($"Для возврата к списку должностей нажмите любую клавишу...");
                 Console.ReadKey();
             }
         }
@@ -142,9 +143,8 @@ namespace Project_Staff
                 if (loadedData != null)
                 {
                     Console.WriteLine("Выполняем чтение данных...");
-                    Positions.LoadPosition(loadedData.Select(p => PositionFileDto.Map(p))
-                    );
-                    Console.WriteLine("Каталог товаров успешно загружен!");
+                    Positions.LoadPosition(loadedData.Select(p => PositionFileDto.Map(p)));
+                    Console.WriteLine("Список должностей успешно загружен!");
                 }
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Project_Staff
             }
             finally
             {
-                Console.WriteLine($"Для возврата к каталогу нажмите любую клавишу...");
+                Console.WriteLine($"Для возврата к списку должностей нажмите любую клавишу...");
                 Console.ReadKey();
             }
         }

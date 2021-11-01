@@ -1,8 +1,8 @@
-﻿using Project_Staff;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace Project_Staff
 {
+    [XmlType(TypeName = "Positions")]
     public class PositionFileDto
     {
         [XmlAttribute("position")]

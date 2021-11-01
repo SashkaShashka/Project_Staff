@@ -6,6 +6,8 @@ namespace Project_Staff
 {
     public class Post
     {
+		public Post(string title, string devision, decimal salary, double bet):this(new Position(title,devision,salary),bet)
+        {}
 		public Post(Position position, double bet)
 		{
 			if (bet <= 0 || bet > 1)
