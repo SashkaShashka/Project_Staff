@@ -23,7 +23,7 @@ namespace Project_Staff
 			Devision = devision;
 			Salary = salary;
 		}
-		public Position(Position position) //метод 
+		public Position(Position position)
 		{
 			Title = position.Title;
 			Devision = position.Devision;
@@ -49,9 +49,10 @@ namespace Project_Staff
 			StringBuilder answer =  new StringBuilder();
 			answer.Append("    Должность: " + Title + Environment.NewLine);
 			answer.Append("\tПодразделение: " + Devision + Environment.NewLine);
-			answer.Append("\tОклад: " + Salary + Environment.NewLine);
+			answer.Append("\tОклад: " + String.Format("{0:C2}",Salary) + Environment.NewLine);
 			return answer.ToString();
 		}
+		
 		public string ToStringTitle() // метод возможно не нужен
 		{
 			StringBuilder answer = new StringBuilder();

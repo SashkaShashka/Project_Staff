@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleCashier
+namespace Project_Staff
 {
     internal class TableColumn<T> where T : class
     {
@@ -17,7 +17,7 @@ namespace ConsoleCashier
         }
 
         public string PrintCell(T obj) =>
-            string.Format("{0," + Width + "}", GetFormattedValue(obj));
+            string.Format("{0," + -Width + "}", GetFormattedValue(obj));
 
         public string PrintTitle() =>
             string.Format("{0," + -Width + "}", Title);

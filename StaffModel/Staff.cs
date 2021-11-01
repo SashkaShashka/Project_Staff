@@ -10,7 +10,7 @@ namespace Project_Staff
 	{
 		static double ndfl = 0.13;
 
-		private static uint Number = 0;
+		private static int Number = 1;
 
 		public Staff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts = null)
 		{
@@ -45,7 +45,7 @@ namespace Project_Staff
 				return ndfl;
 			}
 		}
-		public uint ServiceNumber { get; }
+		public int ServiceNumber { get; }
 		public string SurName { get; private set; }
 		public string FirstName { get; private set; }
 		public string MiddleName { get; private set; }
@@ -76,6 +76,22 @@ namespace Project_Staff
 			Post post = new Post(position, bet);
 			Posts.Add(post);
 		}
+		public bool RemovePost(Post post)
+        {
+			return RemovePost(post.Position);
+        }
+		public bool RemovePost(Position position)
+		{
+			foreach (Post post in Posts)
+			{
+				if (post.Position.Equals(position))
+				{
+					Posts.Remove(post);
+					return true;
+				}
+			}
+			return false;
+		}
 		public void Edit(string surName, string firstName, string middleName, DateTime birthDay)
         {
 			this.SurName = surName;
@@ -105,6 +121,16 @@ namespace Project_Staff
 				answer.Append(post.ToString());
             }
 			answer.Append("Заработная плата: " + String.Format("{0:C2}", CalculateSalary) + Environment.NewLine);
+			return answer.ToString();
+		}
+		public string ToShortString()
+        {
+			StringBuilder answer = new StringBuilder();
+			answer.Append("Табельный номер: " + ServiceNumber + Environment.NewLine);
+			answer.Append("Фамилия: " + SurName + Environment.NewLine);
+			answer.Append("Имя: " + FirstName + Environment.NewLine);
+			answer.Append("Отчество: " + MiddleName + Environment.NewLine);
+			answer.Append("Дата родения: " + BirthDay.Date.ToString("dd.MM.yyyy") + Environment.NewLine);
 			return answer.ToString();
 		}
 	}

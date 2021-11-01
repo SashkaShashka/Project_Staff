@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleCashier
+namespace Project_Staff
 {
     abstract class MenuItem
     {

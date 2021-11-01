@@ -37,7 +37,7 @@ namespace Project_Staff
             double bet;
             Console.WriteLine("Ставка должна быть числом от 0 до 1");
             Console.Write("Введите ставку: ");
-            while (!double.TryParse(Console.ReadLine(), out bet) || bet < 0 || bet > 1)
+            while (!double.TryParse(Console.ReadLine(), out bet) || bet <= 0 || bet > 1)
             {
                 Console.WriteLine("Ставка должна быть числом от 0 до 1");
                 Console.Write("Введите ставку: ");
@@ -46,10 +46,10 @@ namespace Project_Staff
         }
         public static decimal ReadSalary()
         {
-            decimal val;
+            decimal val=0;
             Console.WriteLine("Оклад должен быть не отрицательный в виде числа");
             Console.Write("Введите оклад: ");
-            while (!decimal.TryParse(Console.ReadLine(), out val))
+            while (!decimal.TryParse(Console.ReadLine(), out val) || val < 0)
             {
                 Console.WriteLine("Оклад должен быть не отрицательный в виде числа");
                 Console.Write("Введите оклад: ");

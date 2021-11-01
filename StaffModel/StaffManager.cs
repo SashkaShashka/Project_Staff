@@ -9,9 +9,17 @@ namespace Project_Staff
     public class StaffManager : IEnumerable<Staff>
     {
         private List<Staff> staffs;
-        public StaffManager()
+
+        public StaffManager(List<Staff> staffs = null)
         {
-            staffs = new List<Staff>();
+            if (staffs != null)
+            {
+                this.staffs = staffs;
+            }
+            else
+            {
+                this.staffs = new List<Staff>();
+            }
         }
         public IEnumerable<Staff> Staffs { get => staffs; }
         public int Lenght { get => staffs.Count; }
@@ -30,6 +38,13 @@ namespace Project_Staff
             Staff staff = Find(index);
             if (staff != null)
                 staff.AddPost(position, bet);
+        }
+        public bool RemovePostOfStaff(int index, Post post)
+        {
+            Staff staff = Find(index);
+            if (staff != null)
+                return staff.RemovePost(post);
+            return false;
         }
         public bool RemoveStaff(Staff staff)
         {

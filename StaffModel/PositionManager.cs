@@ -11,19 +11,20 @@ namespace Project_Staff
     {
         private List<Position> positions;
         private StaffManager staffs;
-        public PositionManager(StaffManager staffs)
+        public PositionManager() { }
+
+        public PositionManager(IEnumerable<Position> pos)
         {
             positions = new List<Position>();
-            
-        }
-        public PositionManager(IEnumerable<Position> pos, StaffManager staffs)
-        {
-            positions = new List<Position>();
-            this.staffs = staffs;
+            this.staffs = null;
             foreach (Position position in pos)
             {
                 positions.Add(position);
             }
+        }
+        public void AddStaff(StaffManager staffs)
+        {
+            this.staffs = staffs;
         }
         public IEnumerable<Position> Positions { get => positions; }
         public int Lenght { get => positions.Count; }
@@ -64,15 +65,11 @@ namespace Project_Staff
             else
                 return false;
         }
-        public Position FindByIndex(int index) //сомнительный метод (пока что для тестов)
+        public Position this[int index]
         {
-            if (index < 0 || index > positions.Count - 1)
-                return null;
-            else
-            {
-                return positions[index];
-            }
+            get => positions[index];
         }
+
         public bool Contains(Position position)
         {
             if (Find(position) != null)
