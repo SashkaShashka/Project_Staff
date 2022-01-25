@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffModel", "StaffModel\St
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "StaffDb", "StaffDb\StaffDb.sqlproj", "{9C44B1AF-F0AD-443E-9F12-922020A29EDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffDBContext", "StaffDBContext\StaffDBContext.csproj", "{DB752FBE-0F7C-493A-BA7D-02A812D1F68A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{9C44B1AF-F0AD-443E-9F12-922020A29EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C44B1AF-F0AD-443E-9F12-922020A29EDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C44B1AF-F0AD-443E-9F12-922020A29EDD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DB752FBE-0F7C-493A-BA7D-02A812D1F68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB752FBE-0F7C-493A-BA7D-02A812D1F68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB752FBE-0F7C-493A-BA7D-02A812D1F68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB752FBE-0F7C-493A-BA7D-02A812D1F68A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
