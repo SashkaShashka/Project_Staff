@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Staff]
+(
+	[ServiceNumber] INT NOT NULL PRIMARY KEY,
+	[SurName] NVARCHAR(100) NOT NULL,
+	[FirstName] NVARCHAR(100) NOT NULL,
+	[MiddleName] NVARCHAR(100) NOT NULL,
+	[BirthDay] DATETIME2 NOT NULL
+
+)

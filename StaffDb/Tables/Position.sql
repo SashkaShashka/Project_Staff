@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Position]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[Title] NVARCHAR(200) NOT NULL,
+	[Division] NVARCHAR(200) NOT NULL,
+	[Salary] DECIMAL NOT NULL
+)
