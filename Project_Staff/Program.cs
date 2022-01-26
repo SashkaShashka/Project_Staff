@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_Staff.BD;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,17 +9,31 @@ namespace Project_Staff
     {
         readonly static PositionController positionController;
         readonly static StaffController staffController;
+        const bool useMocks = false;
 
         static Program()
         {
-
-            positionController = new PositionController(MocksFabric.MockPositions);
-            staffController = new StaffController(positionController.Positions,MocksFabric.MockStaffs);
+            if (useMocks)
+            {
+                positionController = new PositionController(MocksFabric.MockPositions);
+                staffController = new StaffController(positionController.Positions, MocksFabric.MockStaffs);
+            }
+            else
+            {
+                positionController = new PositionController(DbManager.GetPositions());
+                staffController = new StaffController(positionController.Positions, DbManager.GetStaff(positionController.Positions));
+            }
             positionController.AddStaff(staffController.Staffs);
         }
         static void Main(string[] args)
         {
-            while (MainMenuInput());
+            while (MainMenuInput()) ;
+
+            if (!useMocks)
+            {
+                DbManager.UpdatePositions(positionController.Positions);
+                DbManager.UpdateStaff(staffController.Staffs);
+            }
         }
 
         static readonly Menu mainMenu = new Menu(new MenuItem[] {

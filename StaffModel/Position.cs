@@ -29,6 +29,7 @@ namespace Project_Staff
 			Devision = position.Devision;
 			Salary = position.Salary;
 		}
+		public int? Id { get; set; }
 		public string Title { get; private set; }
 		public string Devision { get; private set; }
 		public decimal Salary { get; private set; }

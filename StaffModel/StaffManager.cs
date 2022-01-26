@@ -91,10 +91,7 @@ namespace Project_Staff
         }
         public Staff Find(int ServiceNumber)
         {
-            if (ServiceNumber < 0 || ServiceNumber >= Lenght)
-                return null;
-            else
-                return staffs[ServiceNumber];
+            return staffs.Find(s => s.ServiceNumber == ServiceNumber);
         }
         public bool Edit(int staff, string surName = null, string firstName = null, string middleName = null, DateTime birthDay = default)
         {

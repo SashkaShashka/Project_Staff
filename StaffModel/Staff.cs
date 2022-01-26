@@ -14,7 +14,7 @@ namespace Project_Staff
 
 		public Staff(string surName, string firstName, string middleName, DateTime birthDay, List<Post> posts = null)
 		{
-			ServiceNumber = Number++;
+			serviceNumber = Number++;
 			if (string.IsNullOrEmpty(surName))
 			{
 				throw new ArgumentException("surName", "Фамилия не может быть пустой");
@@ -38,14 +38,31 @@ namespace Project_Staff
 
 		{ }
 
-		public double NDFL
+		public static double NDFL
 		{
 			get
 			{
 				return ndfl;
 			}
+			set
+			{
+				if (value < 0 || value >= 1)
+				{
+					throw new ArgumentException("НДФЛ может лежать в пределах [0,1)");
+				}
+				ndfl = value;
+			}
 		}
-		public int ServiceNumber { get; }
+		private int serviceNumber;
+		public int ServiceNumber
+		{
+			get => serviceNumber;
+			set
+			{
+				serviceNumber = value;
+				Number = Math.Max(Number, value + 1);
+			}
+		}
 		public string SurName { get; private set; }
 		public string FirstName { get; private set; }
 		public string MiddleName { get; private set; }
