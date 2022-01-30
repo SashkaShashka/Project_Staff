@@ -11,6 +11,7 @@ namespace StaffDBContext_Code_first.Model.DTO
     public class StaffDbDto
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ServiceNumber { get; set; }
 
         [Required]

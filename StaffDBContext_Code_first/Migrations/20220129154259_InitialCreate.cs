@@ -26,8 +26,7 @@ namespace StaffDBContext_Code_first.Migrations
                 name: "Staff",
                 columns: table => new
                 {
-                    ServiceNumber = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceNumber = table.Column<int>(type: "int", nullable: false),
                     SurName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),

@@ -10,7 +10,7 @@ using StaffDBContext_Code_first;
 namespace StaffDBContext_Code_first.Migrations
 {
     [DbContext(typeof(StaffContext))]
-    [Migration("20220126093759_InitialCreate")]
+    [Migration("20220129154259_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,7 @@ namespace StaffDBContext_Code_first.Migrations
             modelBuilder.Entity("StaffDBContext_Code_first.Model.DTO.StaffDbDto", b =>
                 {
                     b.Property<int>("ServiceNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");

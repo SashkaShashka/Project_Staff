@@ -47,9 +47,7 @@ namespace StaffDBContext_Code_first.Migrations
             modelBuilder.Entity("StaffDBContext_Code_first.Model.DTO.StaffDbDto", b =>
                 {
                     b.Property<int>("ServiceNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
