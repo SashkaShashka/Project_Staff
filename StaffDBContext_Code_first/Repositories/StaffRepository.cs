@@ -29,12 +29,14 @@ namespace StaffDBContext_Code_first.Repositories
             {
                 staffs = staffs.OrderByDescending(p => p.BirthDay);
             }
-            return await staffs.Include(s => s.Positions).ToListAsync();
+            var staffsList = await staffs.Include(s => s.Positions).ThenInclude(p => p.Position).ToListAsync();
+            return staffsList;
         }
         
         public async Task<StaffDbDto> GetAsync(int serviceNumber)
         {
             var staff = await context.Staff.Include(s => s.Positions)
+                .ThenInclude(p => p.Position)
                 .FirstOrDefaultAsync(p => p.ServiceNumber == serviceNumber);
             return staff;
         }
@@ -55,7 +57,16 @@ namespace StaffDBContext_Code_first.Repositories
             var staff = await context.Staff.FindAsync(serviceNumber);
             if (staff != null)
             {
-                context.Staff.Remove(staff);
+                try
+                {
+                    context.Staff.Remove(staff);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             }
             return staff;
         }

@@ -26,7 +26,8 @@ namespace StaffDBContext_Code_first.Migrations
                 name: "Staff",
                 columns: table => new
                 {
-                    ServiceNumber = table.Column<int>(type: "int", nullable: false),
+                    ServiceNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     SurName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -54,7 +55,7 @@ namespace StaffDBContext_Code_first.Migrations
                         column: x => x.PositionId,
                         principalTable: "Position",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StaffPosition_Staff_StaffNumber",
                         column: x => x.StaffNumber,
@@ -66,7 +67,8 @@ namespace StaffDBContext_Code_first.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_StaffPosition_PositionId",
                 table: "StaffPosition",
-                column: "PositionId");
+                column: "PositionId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

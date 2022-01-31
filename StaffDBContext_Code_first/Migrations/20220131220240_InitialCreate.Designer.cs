@@ -10,7 +10,7 @@ using StaffDBContext_Code_first;
 namespace StaffDBContext_Code_first.Migrations
 {
     [DbContext(typeof(StaffContext))]
-    [Migration("20220129154259_InitialCreate")]
+    [Migration("20220131220240_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,9 @@ namespace StaffDBContext_Code_first.Migrations
             modelBuilder.Entity("StaffDBContext_Code_first.Model.DTO.StaffDbDto", b =>
                 {
                     b.Property<int>("ServiceNumber")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
@@ -87,7 +89,8 @@ namespace StaffDBContext_Code_first.Migrations
 
                     b.HasKey("StaffNumber", "PositionId");
 
-                    b.HasIndex("PositionId");
+                    b.HasIndex("PositionId")
+                        .IsUnique();
 
                     b.ToTable("StaffPosition");
 
@@ -97,9 +100,9 @@ namespace StaffDBContext_Code_first.Migrations
             modelBuilder.Entity("StaffDBContext_Code_first.Model.DTO.StaffPositionDbDto", b =>
                 {
                     b.HasOne("StaffDBContext_Code_first.Model.DTO.PositionDbDto", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("StaffDBContext_Code_first.Model.DTO.StaffPositionDbDto", "PositionId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("StaffDBContext_Code_first.Model.DTO.StaffDbDto", "Staff")

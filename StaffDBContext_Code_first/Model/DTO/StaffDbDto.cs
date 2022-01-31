@@ -11,7 +11,7 @@ namespace StaffDBContext_Code_first.Model.DTO
     public class StaffDbDto
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ServiceNumber { get; set; }
 
         [Required]
@@ -28,7 +28,7 @@ namespace StaffDBContext_Code_first.Model.DTO
 
         [Required]
         public DateTime BirthDay { get; set; }
-
+        
         public ICollection<StaffPositionDbDto> Positions { get; set; }
     }
 }

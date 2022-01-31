@@ -19,7 +19,7 @@ namespace StaffWebApi.BL.Model
         //        Bet = Bet
         //    }
         //}
-        public PostApiDto(PositionDbDto staffPosition, double bet)
+        public PostApiDto(PositionApiDto staffPosition, double bet)
         {
             Position = new PositionApiDto(staffPosition);
             Bet = bet;

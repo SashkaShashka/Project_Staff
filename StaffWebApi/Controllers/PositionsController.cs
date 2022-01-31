@@ -107,6 +107,7 @@ namespace StaffWebApi.Controllers
                 {
                     return NotFound(ex.Message);
                 }
+                Console.WriteLine(ex.Message);
                 return StatusCode(500);
             }
             return Ok(position);

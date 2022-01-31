@@ -52,7 +52,7 @@ namespace StaffDBContext_Code_first.Repositories
             var position = await context.Positions.FindAsync(id);
             if (position != null)
             {
-                context.Positions.Remove(position);
+                Delete(position);
             }
             return position;
         }

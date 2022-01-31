@@ -38,6 +38,13 @@ namespace StaffWebApi.BL.Model
             Division = position.Division;
             Salary = position.Salary;
         }
+        public PositionApiDto(PositionApiDto position)
+        {
+            Id = position.Id;
+            Title = position.Title;
+            Division = position.Division;
+            Salary = position.Salary;
+        }
 
     }
 }

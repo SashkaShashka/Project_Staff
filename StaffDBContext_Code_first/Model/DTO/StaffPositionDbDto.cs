@@ -20,7 +20,6 @@ namespace StaffDBContext_Code_first.Model.DTO
         [ForeignKey("StaffNumber")]
         public StaffDbDto Staff { get; set; }
 
-        [ForeignKey("PositionId")]
         public PositionDbDto Position { get; set; }
     }
 }

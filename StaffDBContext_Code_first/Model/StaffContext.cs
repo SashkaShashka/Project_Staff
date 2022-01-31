@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using StaffDBContext_Code_first.Connection;
+using StaffDBContext_Code_first.Model.Configure;
 using StaffDBContext_Code_first.Model.DTO;
 
 namespace StaffDBContext_Code_first
@@ -27,6 +28,8 @@ namespace StaffDBContext_Code_first
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+
             modelBuilder.Entity<StaffPositionDbDto>()
                 .HasKey(staffPosition => new {
                     staffPosition.StaffNumber,
@@ -35,6 +38,9 @@ namespace StaffDBContext_Code_first
 
             modelBuilder.Entity<StaffPositionDbDto>()
                 .HasCheckConstraint("CK_StaffPosition_Bet", "Bet >= 0 AND Bet <= 1");
+
+            modelBuilder.ApplyConfiguration(new StaffPositionConfiguration());
+
         }
     }
 }
