@@ -42,7 +42,10 @@ namespace StaffDBContext_Code_first.Repositories
         {
             context.Staff.Add(staff);
         }
-
+        public void Update(StaffDbDto staff)
+        {
+            context.Staff.Update(staff);
+        }
         public void Delete(StaffDbDto staff)
         {
             context.Staff.Remove(staff);
