@@ -9,16 +9,13 @@ namespace StaffWebApi.BL.Services
         {
             services.AddTransient<PositionRepository>();
             services.AddTransient<StaffRepository>();
-            // services.AddTransient<BillStatusRepository>();
-            // services.AddTransient<BillRepository>();
         }
 
         public static void AddStaffServices(this IServiceCollection services)
         {
             services.AddTransient<PositionsService>();
             services.AddTransient<StaffService>();
-            // services.AddTransient<BillsService>();
-            // services.AddScoped<UsersService>();
+            services.AddScoped<UsersService>();
         }
     }
 }

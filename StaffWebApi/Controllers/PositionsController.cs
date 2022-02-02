@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StaffWebApi.BL.Model;
 using StaffWebApi.BL.Services;
 using StaffWebApi.Exceptions;
@@ -22,6 +23,7 @@ namespace StaffWebApi.Controllers
             this.service = service;
         }
         // GET: api/PositionController
+        [Authorize(Roles = "Employee, Manager, Admin")]
         [HttpGet]
         public async Task<IEnumerable<PositionApiDto>> Get(string search,string filterDivision)
         {
@@ -29,6 +31,7 @@ namespace StaffWebApi.Controllers
         }
 
         // GET api/<PositionController>/5
+        [Authorize(Roles = "Employee, Manager, Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<PositionApiDto>> Get(int id)
         {
@@ -49,6 +52,7 @@ namespace StaffWebApi.Controllers
         }
 
         // POST api/<PositionController>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] PositionApiDto product)
         {
@@ -69,6 +73,7 @@ namespace StaffWebApi.Controllers
         }
 
         // PUT api/<PositionController>/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] PositionApiDto position)
         {
@@ -93,6 +98,7 @@ namespace StaffWebApi.Controllers
         }
 
         // DELETE api/<PositionController>/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<PositionApiDto>> Delete(int id)
         {

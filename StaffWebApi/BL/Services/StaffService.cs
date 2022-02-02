@@ -49,6 +49,19 @@ namespace StaffWebApi.BL.Services
             }
             return (new StaffApiDto(staff), null);
         }
+        public async Task<IEnumerable<MiniStaffApiDto>> MiniGetAsync(string search, bool? sortDate)
+        {
+            var staffs = await staffRepository.GetAllAsync(search, sortDate);
+
+            var returnStaffs = new List<MiniStaffApiDto>();
+
+            foreach (var employee in staffs)
+            {
+                returnStaffs.Add(new MiniStaffApiDto(employee));
+            }
+
+            return returnStaffs.ToList();
+        }
 
         public async Task<Exception> CreateAsync(StaffApiDto staff)
         {

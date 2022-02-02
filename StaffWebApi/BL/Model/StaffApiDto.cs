@@ -12,6 +12,34 @@ using StaffWebApi.Exceptions;
 
 namespace StaffWebApi.BL.Model
 {
+    public class MiniStaffApiDto
+    {
+        public int ServiceNumber { get; set; }
+        public string SurName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public DateTime BirthDay { get; set; }
+        public string? User { get; set; }
+        public IEnumerable<MiniPositionApiDto> Posts { get; set; }
+
+        public MiniStaffApiDto() { }
+        public MiniStaffApiDto(StaffDbDto staffDbDto)
+        {
+            ServiceNumber = staffDbDto.ServiceNumber;
+            SurName = staffDbDto.SurName;
+            FirstName = staffDbDto.FirstName;
+            MiddleName = staffDbDto.MiddleName;
+            BirthDay = staffDbDto.BirthDay;
+            User = staffDbDto.User;
+            List<MiniPositionApiDto> posts = new List<MiniPositionApiDto>();
+            if (staffDbDto.Positions != null)
+                foreach (var post in staffDbDto.Positions)
+                {
+                    posts.Add(new MiniPositionApiDto(post.Position));
+                }
+            Posts = posts;
+        }
+    }
     public class StaffApiDto
     {
         public int ServiceNumber { get; set; }
@@ -19,7 +47,7 @@ namespace StaffWebApi.BL.Model
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public DateTime BirthDay { get; set; }
-
+        public string? User { get; set; }
         public IEnumerable<PostApiDto> Posts { get; set; }
 
         public decimal Salary => (decimal)Posts.Sum(p => (double)p.Position.Salary * p.Bet * (1 - Staff.NDFL));
@@ -32,6 +60,7 @@ namespace StaffWebApi.BL.Model
             FirstName = staffDbDto.FirstName;
             MiddleName = staffDbDto.MiddleName;
             BirthDay = staffDbDto.BirthDay;
+            User = staffDbDto.User;
             List<PostApiDto> posts = new List<PostApiDto>();
             if(staffDbDto.Positions != null)
                 foreach (var post in staffDbDto.Positions)
@@ -50,6 +79,7 @@ namespace StaffWebApi.BL.Model
                 SurName = SurName,
                 MiddleName = MiddleName,
                 BirthDay = BirthDay,
+                User = User,
                 Positions = null
             };
         }

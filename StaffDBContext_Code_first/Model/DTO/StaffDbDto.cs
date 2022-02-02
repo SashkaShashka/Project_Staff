@@ -28,6 +28,8 @@ namespace StaffDBContext_Code_first.Model.DTO
 
         [Required]
         public DateTime BirthDay { get; set; }
+
+        public string User { get; set; }
         
         public ICollection<StaffPositionDbDto> Positions { get; set; }
     }
