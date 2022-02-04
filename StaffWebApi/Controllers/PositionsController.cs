@@ -16,7 +16,7 @@ namespace StaffWebApi.Controllers
     [ApiController]
     public class PositionsController : ControllerBase
     {
-        PositionsService service;
+        private readonly PositionsService service;
 
         public PositionsController(PositionsService service)
         {
@@ -36,19 +36,11 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult<PositionApiDto>> Get(int id)
         {
             (PositionApiDto product, Exception ex) = await service.GetAsync(id);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return product;
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return product;
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         // POST api/<PositionController>
@@ -57,19 +49,11 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult> Post([FromBody] PositionApiDto product)
         {
             Exception ex = await service.CreateAsync(product);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         // PUT api/<PositionController>/5
@@ -78,23 +62,11 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult> Put(int id, [FromBody] PositionApiDto position)
         {
             Exception ex = await service.UpdateAsync(id, position);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                if (ex is ConflictIdException)
-                {
-                    return Conflict(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         // DELETE api/<PositionController>/5
@@ -103,20 +75,11 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult<PositionApiDto>> Delete(int id)
         {
             (var position, Exception ex) = await service.DeleteAsync(id);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                Console.WriteLine(ex.Message);
-                return StatusCode(500);
-            }
-            return Ok(position);
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return position;
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
     }
 }

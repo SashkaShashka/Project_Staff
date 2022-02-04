@@ -91,34 +91,22 @@ namespace StaffWebApi.Controllers
                 return BadRequest("Имя пользователя некорректно.");
             }
             var result = await userService.UpdateProfile(profile);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result != null)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         [HttpPost("password")]
         public async Task<ActionResult> PostPassword([FromForm] string password)
         {
             var result = await userService.ResetPassword(HttpContext.User.Identity.Name, password);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result is SaveChangesException)
-            {
-                return BadRequest(result.Message);
-            }
-            if (result != null)
-            {
-                return StatusCode(500, result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
     }
 }

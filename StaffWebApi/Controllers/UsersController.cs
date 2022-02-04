@@ -45,79 +45,55 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult> Post([FromBody] UserProfileCreateApiDto profile)
         {
             var result = await userService.Create(profile);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result is AlreadyExistsException)
-            {
-                return Conflict(result.Message);
-            }
-            if (result != null)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UserProfileCreateApiDto profile)
         {
             var result = await userService.UpdateProfile(profile);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result != null)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         [HttpDelete("{userName}")]
         public async Task<ActionResult> Delete(string userName)
         {
             var result = await userService.Delete(userName);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result != null)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         [HttpPost("{username}/role/{role}")]
         public async Task<ActionResult> PostRole(string userName, string role)
         {
             var result = await userService.AssignRole(userName, role);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result != null)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         [HttpDelete("{username}/role/{role}")]
         public async Task<ActionResult> DeleteRole(string userName, string role)
         {
             var result = await userService.RemoveFromRole(userName, role);
-            if (result is KeyNotFoundException)
-            {
-                return NotFound(result.Message);
-            }
-            if (result != null)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
     }
 }

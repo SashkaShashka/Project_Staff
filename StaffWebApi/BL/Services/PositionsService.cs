@@ -10,7 +10,7 @@ namespace StaffWebApi.BL.Services
 {
     public class PositionsService
     {
-        protected PositionRepository repository;
+        private readonly PositionRepository repository;
 
         public PositionsService(PositionRepository repository)
         {

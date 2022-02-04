@@ -12,7 +12,7 @@ namespace StaffWebApi.BL.Services
 {
     public class StaffService
     {
-        protected StaffRepository staffRepository;
+        private readonly StaffRepository staffRepository;
 
         public StaffService(StaffRepository staffRepository)
         {
@@ -112,74 +112,6 @@ namespace StaffWebApi.BL.Services
             return null;
         }
 
-        //// добавление списка должностей к уже имеюющимся по информации всей position с проверкой на существование у сотрудника
-        //public async Task<Exception> AddPositionAsync(int serviceNumber, StaffApiDto staff)
-        //{
-        //    if (serviceNumber < 0)
-        //    {
-        //        return new ArgumentException("Некорректный ID");
-        //    }
-        //    if (serviceNumber != staff.ServiceNumber)
-        //    {
-        //        return new ConflictIdException();
-        //    }
-
-
-        //    var staffToUpdate = await staffRepository.GetAsync(serviceNumber);
-        //    if (staffToUpdate == null)
-        //    {
-        //        return new KeyNotFoundException($"Cотрудник с табельным номером ${serviceNumber} не найден.");
-        //    }
-        //    var e = staff.AddPosition(staffToUpdate);
-        //    if (e != null)
-        //        return e;
-        //    staffRepository.Update(staffToUpdate);
-
-        //    try
-        //    {
-        //        await staffRepository.SaveAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Exception("Произошла ошибка при сохранении данных", ex);
-        //    }
-        //    return null;
-        //}
-
-        //// удаление списка должностей из уже имеющихся по информации всей position с проверкой на существование у сотрудника
-        //public async Task<Exception> DeletePositionAsync(int serviceNumber, StaffApiDto staff)
-        //{
-        //    if (serviceNumber < 0)
-        //    {
-        //        return new ArgumentException("Некорректный ID");
-        //    }
-        //    if (serviceNumber != staff.ServiceNumber)
-        //    {
-        //        return new ConflictIdException();
-        //    }
-
-
-        //    var staffToUpdate = await staffRepository.GetAsync(serviceNumber);
-        //    if (staffToUpdate == null)
-        //    {
-        //        return new KeyNotFoundException($"Cотрудник с табельным номером ${serviceNumber} не найден.");
-        //    }
-        //    var e = staff.DeletePosition(staffToUpdate);
-        //    if (e != null)
-        //        return e;
-        //    staffRepository.Update(staffToUpdate);
-
-        //    try
-        //    {
-        //        await staffRepository.SaveAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Exception("Произошла ошибка при сохранении данных", ex);
-        //    }
-        //    return null;
-        //}
-
         public async Task<Exception> UpdatePositionAsync(int serviceNumber, StaffPositionsApiDto staff)
         {
             if (serviceNumber < 0)
@@ -208,6 +140,7 @@ namespace StaffWebApi.BL.Services
             {
                 return new Exception("Произошла ошибка при сохранении данных", ex);
             }
+
             return null;
         }
         public async Task<(StaffApiDto, Exception)> DeleteAsync(int serviceNumber)

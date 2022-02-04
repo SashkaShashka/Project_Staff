@@ -17,7 +17,7 @@ namespace StaffWebApi.Controllers
     [ApiController]
     public class StaffController : ControllerBase
     {
-        StaffService service;
+        private readonly StaffService service;
 
         public StaffController(StaffService service)
         {
@@ -65,19 +65,11 @@ namespace StaffWebApi.Controllers
             if (roles == "Employee")
                 if (identity.Name != staff.User)
                     return NotFound();
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return staff;
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return staff;
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
 
         // POST api/<StaffController>
@@ -86,19 +78,11 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult> Post([FromBody] StaffApiDto staff)
         {
             Exception ex = await service.CreateAsync(staff);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1,resEx.Item2);
         }
 
         // PUT api/<StaffController>/5
@@ -107,131 +91,35 @@ namespace StaffWebApi.Controllers
         public async Task<ActionResult> Put(int serviceNumber, [FromBody] StaffApiDto staff)
         {
             Exception ex = await service.UpdateAsync(serviceNumber, staff);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                if (ex is ConflictIdException)
-                {
-                    return Conflict(ex.Message);
-                }
-                if (ex is AlreadyExistsException)
-                {
-                    return Conflict(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
-
-        //// Put api/<StaffController>/AddPosition
-        //[HttpPut("{serviceNumber}/AddPosition")]
-        //public async Task<ActionResult> AddPositions(int serviceNumber, [FromBody] StaffApiDto staff)
-        //{
-        //    Exception ex = await service.AddPositionAsync(serviceNumber, staff);
-        //    if (ex != null)
-        //    {
-        //        if (ex is ArgumentException)
-        //        {
-        //            return BadRequest(ex.Message);
-        //        }
-        //        if (ex is KeyNotFoundException)
-        //        {
-        //            return NotFound(ex.Message);
-        //        }
-        //        if (ex is ConflictIdException)
-        //        {
-        //            return Conflict(ex.Message);
-        //        }
-        //        if (ex is AlreadyExistsException)
-        //        {
-        //            return Conflict(ex.Message);
-        //        }
-        //        return StatusCode(500);
-        //    }
-        //    return Ok();
-        //}
-
-        // Put api/<StaffController>/UpdatePosition
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{serviceNumber}/UpdatePosition")]
         public async Task<ActionResult> UpdatePosition(int serviceNumber, [FromBody] StaffPositionsApiDto staff)
         {
             Exception ex = await service.UpdatePositionAsync(serviceNumber, staff);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                {
-                    return BadRequest(ex.Message);
-                }
-                if (ex is KeyNotFoundException)
-                {
-                    return NotFound(ex.Message);
-                }
-                if (ex is ConflictIdException)
-                {
-                    return Conflict(ex.Message);
-                }
-                if (ex is AlreadyExistsException)
-                {
-                    return Conflict(ex.Message);
-                }
-                return StatusCode(500);
-            }
-            return Ok();
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
-
-        //// Put api/<StaffController>/DeletePosition
-        //[HttpPut("{serviceNumber}/DeletePosition")]
-        //public async Task<ActionResult> DeletePositions(int serviceNumber, [FromBody] StaffApiDto staff)
-        //{
-        //    Exception ex = await service.DeletePositionAsync(serviceNumber, staff);
-        //    if (ex != null)
-        //    {
-        //        if (ex is ArgumentException)
-        //        {
-        //            return BadRequest(ex.Message);
-        //        }
-        //        if (ex is KeyNotFoundException)
-        //        {
-        //            return NotFound(ex.Message);
-        //        }
-        //        if (ex is ConflictIdException)
-        //        {
-        //            return Conflict(ex.Message);
-        //        }
-        //        if (ex is AlreadyExistsException)
-        //        {
-        //            return Conflict(ex.Message);
-        //        }
-        //        return StatusCode(500);
-        //    }
-        //    return Ok();
-        //}
-
-        // DELETE api/<StaffController>/5
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{serviceNumber}")]
         public async Task<ActionResult<PositionApiDto>> Delete(int serviceNumber)
         {
             (var staff, Exception ex) = await service.DeleteAsync(serviceNumber);
-            if (ex != null)
-            {
-                if (ex is ArgumentException)
-                    return BadRequest(ex.Message);
-                if (ex is KeyNotFoundException)
-                    return NotFound(ex.Message);
-                return StatusCode(500);
-            }
-            return Ok(staff);
+            var resEx = CheckException.CheckError(ex);
+            if (resEx.Item1 == 200)
+                return Ok(staff);
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
         }
     }
 }

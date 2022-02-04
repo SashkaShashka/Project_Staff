@@ -13,7 +13,7 @@ namespace StaffDBContext_Code_first.Repositories
         public StaffRepository(StaffContext context) : base(context) { }
         public async Task<IEnumerable<StaffDbDto>> GetAllAsync(string search, bool? sortDate)
         {
-            var staffs = context.Staff.AsQueryable();
+            var staffs = context.Staff.AsNoTracking();
             if (!string.IsNullOrEmpty(search))
             {
                 staffs = staffs

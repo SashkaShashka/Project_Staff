@@ -11,14 +11,6 @@ namespace StaffWebApi.BL.Model
         public PositionApiDto Position { get; set; }
         public double Bet { get; set; }
         public PostApiDto() {}
-        //public PostDbDto Create()
-        //{
-        //    return new PostDBDto
-        //    {
-        //        Position = Position.Create(),
-        //        Bet = Bet
-        //    }
-        //}
         public PostApiDto(PositionApiDto staffPosition, double bet)
         {
             Position = new PositionApiDto(staffPosition);
