@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffModel", "StaffModel\St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffDBContext_Code_first", "StaffDBContext_Code_first\StaffDBContext_Code_first.csproj", "{549E4C59-D16B-4BB7-BCD4-6D7D8BB7357A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffWebApi", "StaffWebApi\StaffWebApi.csproj", "{E256AE6A-32ED-4220-ACC5-96DBD57BD1DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffWebApi", "StaffWebApi\StaffWebApi.csproj", "{E256AE6A-32ED-4220-ACC5-96DBD57BD1DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
