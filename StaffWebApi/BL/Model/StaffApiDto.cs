@@ -89,6 +89,7 @@ namespace StaffWebApi.BL.Model
             staff.MiddleName = MiddleName;
             staff.SurName = SurName;
             staff.BirthDay = BirthDay;
+            staff.User = User;
         }
 
     }
@@ -97,7 +98,7 @@ namespace StaffWebApi.BL.Model
         public class Post
         {
             public int Position { get; set; }
-            public int Bet { get; set; }
+            public double Bet { get; set; }
             public Post() { }
         }
         public int ServiceNumber { get; set; }

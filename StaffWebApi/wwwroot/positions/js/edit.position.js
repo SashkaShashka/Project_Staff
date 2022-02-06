@@ -2,15 +2,15 @@ import api from "/utils/api.js";
 import "/components/form.field/form.field.js";
 import { setLoading, setAlert, setSubmitting } from "/utils/forms.js";
 
-function getProductsRequest(id) {
+function getPositionsRequest(id) {
   return api.get("Positions/" + id);
 }
 
-function updateProductsRequest(position) {
+function updatePositionsRequest(position) {
   return api.put("Positions/" + position.id, position);
 }
 
-const form = document.getElementById("form-product");
+const form = document.getElementById("form-position");
 formLoad(form);
 
 form.addEventListener("submit", (evt) => {
@@ -20,17 +20,17 @@ form.addEventListener("submit", (evt) => {
 
   setSubmitting(form, true);
   setAlert(form, "");
-  updateProductsRequest({
+  updatePositionsRequest({
     id: +new URLSearchParams(location.search).get("id"),
     title: form["title"].value,
     division: form["division"].value,
     salary: +form["salary"].value,
   })
     .then(() => {
-      setAlert(form, "Товар успешно изменен", "success");
+      setAlert(form, "Должность успешно изменена", "success");
       setTimeout(() => (location = "/positions/index.html"));
     })
-    .catch(() => setAlert(form, "Не удалось изменить товар"))
+    .catch(() => setAlert(form, "Не удалось изменить должность"))
     .finally(() => setSubmitting(form, false));
 });
 
@@ -38,7 +38,7 @@ function formLoad(form) {
   const position = new URLSearchParams(location.search).get("id");
   setLoading(form, true);
   setAlert(form, "");
-  getProductsRequest(position)
+  getPositionsRequest(position)
     .then((position) => {
       console.log(position);
       form["title"].value = position.title;
@@ -46,10 +46,7 @@ function formLoad(form) {
       form["salary"].value = position.salary;
     })
     .catch(() =>
-      setAlert(
-        form,
-        `Не удалось загрузить данные о товаре со штрих-кодом ${id}`
-      )
+      setAlert(form, `Не удалось загрузить данные о должности с id: ${id}`)
     )
     .finally(() => setLoading(form, false));
 }

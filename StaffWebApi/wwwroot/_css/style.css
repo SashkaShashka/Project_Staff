@@ -5,7 +5,7 @@
        Иначе при наличии рамки блоки будут "вылезать" в стороны. */
   box-sizing: border-box;
 }
-.products-container {
+.positions-container {
   gap: 12px;
 }
 .mar {

@@ -1,17 +1,17 @@
 import api from "/utils/api.js";
 import { createRublesFormat } from "/utils/format.js";
 import "/components/alert/alert.js";
-import { createDateFormat } from "/utils/format.js";
+import { createDateFormat } from "/utils/forms.js";
 
 function getStaffRequest() {
   return api.get("Staff");
 }
 
-function deleteProductsRequest(id) {
+function deleteStaffRequest(id) {
   return api.delete("Staff/" + id);
 }
 
-const list = document.querySelector("#products-container");
+const list = document.querySelector("#staffs-container");
 const templateStaff = document.querySelector("#templateStaff");
 const templatePosition = document.querySelector("#templatePosition");
 const priceFormat = createRublesFormat(true);
@@ -31,7 +31,7 @@ async function fillStaff() {
   } catch (err) {
     console.error(err);
     const alert = document.createElement("alert-message");
-    alert.innerText = "Не удалось загрузить список товаров";
+    alert.innerText = "Не удалось загрузить список сотрудников";
     list.replaceChildren(alert);
   }
 }
@@ -42,7 +42,10 @@ function createStaffCard(staff) {
   const cardFio = card.querySelector('[name="FIO"]');
   const cardBirthday = card.querySelector('[name="birthday"]');
   const cardSalary = card.querySelector('[name="resultSalary"]');
+  const cardUser = card.querySelector('[name="withUser"]');
   const cardEdit = card.querySelector('[name="edit"]');
+  const cardOpenWindowDelete = card.querySelector('[name="openWindowDelete"]');
+  const cardWindowOpenDelete = card.querySelector('[name="windowOpenDelete"]');
   const cardAddPosotion = card.querySelector('[name="addPosition"]');
   const cardRemove = card.querySelector('[name="remove"]');
   const cardOpenWindow = card.querySelector('[name="openWindow"]');
@@ -58,7 +61,6 @@ function createStaffCard(staff) {
     cardFio.innerHTML =
       staff.surName + " " + staff.firstName + " " + staff.middleName;
   }
-  console.log(staff.birthDay);
   if (cardBirthday) {
     cardBirthday.innerHTML =
       "Дата рождения: " + createDateFormat(staff.birthDay);
@@ -67,35 +69,39 @@ function createStaffCard(staff) {
     cardSalary.innerHTML =
       "Заработная плата: " + priceFormat.format(staff.salary);
   }
+  if (cardUser) {
+    if (staff.user != "") {
+      cardUser.innerHTML = "Связанный пользователь: " + staff.user;
+    } else {
+      cardUser.innerHTML = "Связанный пользователь не задан";
+    }
+  }
+  if (cardOpenWindowDelete) {
+    cardOpenWindowDelete.setAttribute(
+      "data-target",
+      "#modal" + staff.serviceNumber
+    );
+  }
+  if (cardWindowOpenDelete) {
+    cardWindowOpenDelete.setAttribute("id", "modal" + staff.serviceNumber);
+  }
   for (let post of staff.posts) {
     listPos.append(createPosCard(post));
   }
-  cardEdit.href = "./edit.html?id=" + staff.serviceNumber;
+  cardEdit.href = "./staff/edit.html?serviceNumber=" + staff.serviceNumber;
+  cardAddPosotion.href =
+    "./staff/addPositions.html?serviceNumber=" + staff.serviceNumber;
   cardRemove.onclick = () => {
-    deleteProductsRequest(staff.serviceNumber)
-      .then(() => fillProducts())
+    deleteStaffRequest(staff.serviceNumber)
+      .then(() => fillStaff())
       .catch((err) => {
         console.error(err);
         const alert = document.createElement("alert-message");
-        alert.innerText = `Не удалось удалить товар ${staff.serviceNumber}`;
+        alert.innerText = `Не удалось удалить сотрудника ${staff.serviceNumber}`;
         alert.scrollIntoView();
         list.after(alert);
       });
   };
-  /*
-  cardRemove.addEventListener("submit", () => {
-    console.log(position.id);
-    deleteProductsRequest(position.id)
-      .then(() => fillProducts())
-      .catch((err) => {
-        console.error(err);
-        const alert = document.createElement("alert-message");
-        alert.innerText = `Не удалось удалить товар ${position.id} (${position.title})`;
-        alert.scrollIntoView();
-        list.after(alert);
-      });
-  });
-*/
   return card;
 }
 
