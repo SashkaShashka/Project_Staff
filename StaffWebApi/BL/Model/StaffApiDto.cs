@@ -20,7 +20,7 @@ namespace StaffWebApi.BL.Model
         public string MiddleName { get; set; }
         public DateTime BirthDay { get; set; }
         public string? User { get; set; }
-        public IEnumerable<MiniPositionApiDto> Posts { get; set; }
+        public IEnumerable<PositionApiDto> Posts { get; set; }
 
         public MiniStaffApiDto() { }
         public MiniStaffApiDto(StaffDbDto staffDbDto)
@@ -31,11 +31,11 @@ namespace StaffWebApi.BL.Model
             MiddleName = staffDbDto.MiddleName;
             BirthDay = staffDbDto.BirthDay;
             User = staffDbDto.User;
-            List<MiniPositionApiDto> posts = new List<MiniPositionApiDto>();
+            List<PositionApiDto> posts = new List<PositionApiDto>();
             if (staffDbDto.Positions != null)
                 foreach (var post in staffDbDto.Positions)
                 {
-                    posts.Add(new MiniPositionApiDto(post.Position));
+                    posts.Add(new PositionApiDto(post.Position));
                 }
             Posts = posts;
         }

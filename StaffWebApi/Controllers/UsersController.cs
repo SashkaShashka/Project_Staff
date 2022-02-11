@@ -74,15 +74,12 @@ namespace StaffWebApi.Controllers
                 return StatusCode(resEx.Item1, resEx.Item2);
         }
 
-        [HttpPost("{username}/role/{role}")]
-        public async Task<ActionResult> PostRole(string userName, string role)
+        [HttpPost("{userName}")]
+        public async Task<ActionResult> PostRole([FromRoute] string userName, [FromQuery] string roles)
         {
-            var result = await userService.AssignRole(userName, role);
-            var resEx = CheckException.CheckError(result);
-            if (resEx.Item1 == 200)
-                return Ok();
-            else
-                return StatusCode(resEx.Item1, resEx.Item2);
+            var result = await userService.SetRoles(userName, roles.Split(','), HttpContext.User.Identity.Name == userName);
+
+            return result.GetResultObject($"{result?.Message}. {result?.InnerException?.Message}");
         }
 
         [HttpDelete("{username}/role/{role}")]
@@ -95,5 +92,16 @@ namespace StaffWebApi.Controllers
             else
                 return StatusCode(resEx.Item1, resEx.Item2);
         }
+        [HttpPost("{username}/password")]
+        public async Task<ActionResult> PostPassword(string userName,[FromForm] string password)
+        {
+            var result = await userService.ResetPassword(userName, password);
+            var resEx = CheckException.CheckError(result);
+            if (resEx.Item1 == 200)
+                return Ok();
+            else
+                return StatusCode(resEx.Item1, resEx.Item2);
+        }
+        
     }
 }

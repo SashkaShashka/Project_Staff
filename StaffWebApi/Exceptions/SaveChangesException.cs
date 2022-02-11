@@ -7,8 +7,8 @@ namespace StaffWebApi.Exceptions
 {
     public class SaveChangesException : Exception
     {
-        public SaveChangesException() : base("Произошла неизвестная ошибка при сохранении данных") { }
-        public SaveChangesException(Exception innerException)
-            : base("Произошла ошибка при сохранении данных", innerException) { }
+        public SaveChangesException(string message = "Произошла неизвестная ошибка при сохранении данных") : base(message) { }
+        public SaveChangesException(Exception innerException) : base("Произошла неизвестная ошибка при сохранении данных", innerException) { }
+        public SaveChangesException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

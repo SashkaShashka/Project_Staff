@@ -76,11 +76,10 @@ namespace StaffWebApi.Controllers
         }
 
         [HttpGet("roles")]
-        public string GetRoles()
+        public List<string> GetRoles()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var roles = identity.FindFirst(ClaimTypes.Role)?.Value;
-            return roles;
+            return identity.FindAll(ClaimTypes.Role).Select(role => role.Value).ToList();
         }
 
         [HttpPut]
@@ -90,7 +89,8 @@ namespace StaffWebApi.Controllers
             {
                 return BadRequest("Имя пользователя некорректно.");
             }
-            var result = await userService.UpdateProfile(profile);
+
+            var result = await userService.UpdateProfile(profile,true);
             var resEx = CheckException.CheckError(result);
             if (resEx.Item1 == 200)
                 return Ok();

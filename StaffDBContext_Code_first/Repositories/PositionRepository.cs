@@ -27,6 +27,11 @@ namespace StaffDBContext_Code_first.Repositories
             }
             return await positions.ToListAsync();
         }
+        public async Task<IEnumerable<string>> GetDivisionsAsync()
+        {
+            var divisions = await context.Positions.GroupBy(p => p.Division).Select(s => s.Key).ToListAsync();
+            return divisions;
+        }
         public async Task<PositionDbDto> GetAsync(int id)
         {
             var position = await context.Positions.FindAsync(id);

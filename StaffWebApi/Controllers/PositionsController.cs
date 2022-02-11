@@ -23,15 +23,21 @@ namespace StaffWebApi.Controllers
             this.service = service;
         }
         // GET: api/PositionController
-        [Authorize(Roles = "Employee, Manager, Admin")]
+        [Authorize(Roles = "Manager, Admin")]
         [HttpGet]
-        public async Task<IEnumerable<PositionApiDto>> Get(string search,string filterDivision)
+        public async Task<IEnumerable<PositionApiDto>> Get(string search, string filterDivision)
         {
             return await service.GetAsync(search, filterDivision);
         }
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpGet("Divisions")]
+        public async Task<IEnumerable<string>> GetDivisions()
+        {
+            return await service.GetDivisionsAsync();
+        }
 
         // GET api/<PositionController>/5
-        [Authorize(Roles = "Employee, Manager, Admin")]
+        [Authorize(Roles = "Manager, Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<PositionApiDto>> Get(int id)
         {

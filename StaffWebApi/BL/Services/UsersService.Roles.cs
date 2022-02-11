@@ -1,4 +1,5 @@
 ﻿using StaffDBContext_Code_first.Model.DTO;
+using StaffWebApi.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,27 @@ namespace StaffWebApi.BL.Services
         {
             return await ApplyToUser(userName, user => RemoveFromRole(user, role));
         }
+
+        public async Task<Exception> SetRoles(UserDbDto user, IEnumerable<string> roles, bool updateCookies)
+        {
+            var result = await userManager.RemoveFromRolesAsync(user, await userManager.GetRolesAsync(user));
+            if (result.Succeeded)
+            {
+                result = await userManager.AddToRolesAsync(user, roles);
+            }
+
+            if (!result.Succeeded)
+            {
+                return new SaveChangesException($"Не удалось назначить пользователю {user.UserName} роли");
+            }
+
+            if (updateCookies)
+            {
+                await signInManager.RefreshSignInAsync(user);
+            }
+
+            return null;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using StaffDBContext_Code_first.Model.DTO;
 using StaffWebApi.BL.Model;
 using StaffWebApi.Exceptions;
@@ -11,6 +12,7 @@ namespace StaffWebApi.BL.Services
 {
     public partial class UsersService
     {
+        
         public async Task<IEnumerable<UserProfileApiDto>> GetProfiles()
         {
             var users = await userManager.Users.ToListAsync();
@@ -30,7 +32,7 @@ namespace StaffWebApi.BL.Services
             return profile;
         }
 
-        public async Task<Exception> UpdateProfile(UserDbDto user, UserProfileApiDto profile)
+        public async Task<Exception> UpdateProfile(UserDbDto user, UserProfileApiDto profile, bool inAccount)
         {
             if (user == null)
             {
@@ -38,12 +40,14 @@ namespace StaffWebApi.BL.Services
             }
             profile.Update(user);
             var result = await userManager.UpdateAsync(user);
+            if (inAccount)
+                await signInManager.RefreshSignInAsync(user);
             return result.Succeeded ? null : new SaveChangesException();
         }
 
-        public async Task<Exception> UpdateProfile(UserProfileApiDto profile)
+        public async Task<Exception> UpdateProfile(UserProfileApiDto profile, bool inAccount = false)
         {
-            return await ApplyToUser(profile.UserName, (user) => UpdateProfile(user, profile));
+            return await ApplyToUser(profile.UserName, (user) => UpdateProfile(user, profile, inAccount));
         }
 
         public async Task<Exception> ResetPassword(UserDbDto user, string newPassword)

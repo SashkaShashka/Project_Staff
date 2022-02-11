@@ -46,16 +46,4 @@ namespace StaffWebApi.BL.Model
             Salary = position.Salary;
         }
     }
-    public class MiniPositionApiDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Division { get; set; }
-        public MiniPositionApiDto(PositionDbDto position)
-        {
-            Id = position.Id;
-            Title = position.Title;
-            Division = position.Division;
-        }
-    }
 }

@@ -22,6 +22,10 @@ namespace StaffWebApi.BL.Services
             var positions = await repository.GetAllAsync(search, filgerDivision);
             return positions.Select(p => new PositionApiDto(p)).ToList();
         }
+        public async Task<IEnumerable<string>> GetDivisionsAsync()
+        {
+            return await repository.GetDivisionsAsync();
+        }
         public async Task<(PositionApiDto, Exception)> GetAsync(int id)
         {
             if (id<1)

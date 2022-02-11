@@ -34,9 +34,7 @@ function createUserMenu(logoutAction) {
     menuList.classList.add("dropdown-menu-end");
     menuList.setAttribute("aria-labelledby", "profileMenu");
     menuList.append(createMenuListItem("Профиль", "/profile/index.html"));
-    menuList.append(
-        createMenuListItem("Сменить пароль", "/profile/change_password.html")
-    );
+    menuList.append(createMenuListItem("Сменить пароль", "/profile/change_password.html"));
     menuList.append(createMenuListItem("Выйти", "#", logoutAction));
     return menuList;
 }
@@ -63,12 +61,9 @@ export class AuthHeader extends HTMLElement {
         super();
         this.loading = document.createElement("div");
         this.loading.className = "text-secondary";
-        this.loading.innerHTML =
-            '<span class="spinner-border spinner-border-sm"></span>';
+        this.loading.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
         this.login = document.createElement("div");
-        this.loginUrl =
-            "/auth/login.html?from=" +
-            encodeURIComponent(location.pathname + location.search);
+        this.loginUrl = "/auth/login.html?from=" + encodeURIComponent(location.pathname + location.search);
         this.login.innerHTML = `<a class="btn btn-primary" href="${this.loginUrl}">Войти</a>`;
     }
 
@@ -98,12 +93,7 @@ export class AuthHeader extends HTMLElement {
                     if (profile.middleName) {
                         userFullName += profile.middleName[0] + ".";
                     }
-                    this.replaceChildren(
-                        createUserDropdown(
-                            userFullName || profile.userName,
-                            () => this.logout()
-                        )
-                    );
+                    this.replaceChildren(createUserDropdown(userFullName || profile.userName, () => this.logout()));
                 } else {
                     this.replaceChildren(this.login);
                     location.assign(this.loginUrl);
